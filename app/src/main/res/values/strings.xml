@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">fitnessapp11</string>
+    <string name="duration_format">%d minutes</string>
+    <string name="delete_confirmation">Delete this workout?</string>
+    <string name="workout_deleted">Workout deleted successfully</string>
+    <string name="edit_workout">Edit Workout</string>
+    <string name="delete_workout">Delete Workout</string>
+</resources>

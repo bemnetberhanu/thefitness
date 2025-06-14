@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/workoutListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <fragment
+        android:id="@+id/workoutListFragment"
+        android:name="com.example.fitnessapp11.fragments.WorkoutListFragment"
+        android:label="Workouts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <action
+            android:id="@+id/action_workoutListFragment_to_workoutDetailFragment"
+            app:destination="@id/workoutDetailFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/workoutDetailFragment"
+        android:name="com.example.fitnessapp11.fragments.WorkoutDetailFragment"
+        android:label="Workout Details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <argument
+            android:name="workoutId"
+            app:argType="integer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <action
+            android:id="@+id/action_workoutDetailFragment_to_editWorkoutFragment"
+            app:destination="@id/editWorkoutFragment"
+            android:layout_width="match_parent" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editWorkoutFragment"
+        android:name="com.example.fitnessapp11.fragments.EditWorkoutFragment"
+        android:label="Edit Workout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <argument
+            android:name="workoutId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
