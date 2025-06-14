@@ -8,86 +8,49 @@ import androidx.lifecycle.LiveData;
 import com.example.fitnessapp11.database.AppDatabase;
 import com.example.fitnessapp11.database.WorkoutDao;
 import com.example.fitnessapp11.models.workout;
+import com.example.fitnessapp11.viewmodels.WorkoutViewModel;
 
 import java.util.List;
 
 public class WorkoutRepository {
-    private WorkoutDao workoutDao;
-    private LiveData<List<workout>> allWorkouts;
+    private final WorkoutDao workoutDao;
+    private final LiveData<List<workout>> allWorkouts;
 
     public WorkoutRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
-        workoutDao = database.workoutDao();
-        allWorkouts = workoutDao.getAllWorkouts();
+        this.workoutDao = database.workoutDao();
+        this.allWorkouts = workoutDao.getAllWorkouts();
     }
 
-    // Insert operation
     public void insert(workout workout) {
-        new InsertWorkoutAsyncTask(workoutDao).execute(workout);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            workoutDao.insert(workout);
+        });
     }
 
-    // Update operation
+    public void insertAll(workout... workouts) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            workoutDao.insertAll(workouts);
+        });
+    }
+
     public void update(workout workout) {
-        new UpdateWorkoutAsyncTask(workoutDao).execute(workout);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            workoutDao.update(workout);
+        });
     }
 
-    // Delete operation
     public void delete(workout workout) {
-        new DeleteWorkoutAsyncTask(workoutDao).execute(workout);
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            workoutDao.delete(workout);
+        });
     }
 
-    // Get all workouts
     public LiveData<List<workout>> getAllWorkouts() {
         return allWorkouts;
     }
 
-    // Get workout by ID
     public LiveData<workout> getWorkoutById(int workoutId) {
         return workoutDao.getWorkoutById(workoutId);
-    }
-
-    // AsyncTask for insert operation
-    private static class InsertWorkoutAsyncTask extends AsyncTask<workout, Void, Void> {
-        private WorkoutDao workoutDao;
-
-        private InsertWorkoutAsyncTask(WorkoutDao workoutDao) {
-            this.workoutDao = workoutDao;
-        }
-
-        @Override
-        protected Void doInBackground(workout... workouts) {
-            workoutDao.insert(workouts[0]);
-            return null;
-        }
-    }
-
-    // AsyncTask for update operation
-    private static class UpdateWorkoutAsyncTask extends AsyncTask<workout, Void, Void> {
-        private WorkoutDao workoutDao;
-
-        private UpdateWorkoutAsyncTask(WorkoutDao workoutDao) {
-            this.workoutDao = workoutDao;
-        }
-
-        @Override
-        protected Void doInBackground(workout... workouts) {
-            workoutDao.update(workouts[0]);
-            return null;
-        }
-    }
-
-    // AsyncTask for delete operation
-    private static class DeleteWorkoutAsyncTask extends AsyncTask<workout, Void, Void> {
-        private WorkoutDao workoutDao;
-
-        private DeleteWorkoutAsyncTask(WorkoutDao workoutDao) {
-            this.workoutDao = workoutDao;
-        }
-
-        @Override
-        protected Void doInBackground(workout... workouts) {
-            workoutDao.delete(workouts[0]);
-            return null;
-        }
     }
 }

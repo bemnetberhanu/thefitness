@@ -1,0 +1,17 @@
+<!-- res/menu/bottom_nav_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/workoutListFragment"
+        android:icon="@drawable/baseline_sports_gymnastics_24"
+        android:title="Workouts" />
+
+    <item
+        android:id="@+id/nutritionFragment"
+        android:icon="@drawable/baseline_12mp_24"
+        android:title="Nutrition" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/baseline_12mp_24"
+        android:title="Profile" />
+</menu>

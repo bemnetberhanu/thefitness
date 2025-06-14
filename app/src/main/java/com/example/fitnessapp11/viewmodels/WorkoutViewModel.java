@@ -1,20 +1,23 @@
 package com.example.fitnessapp11.viewmodels;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.fitnessapp11.database.WorkoutDao;
 import com.example.fitnessapp11.models.workout;
 import com.example.fitnessapp11.repositories.WorkoutRepository;
 
 import java.util.List;
 
 public class WorkoutViewModel extends AndroidViewModel {
-    private WorkoutRepository repository;
-    private LiveData<List<workout>> allWorkouts;
+    private final WorkoutRepository repository;
+    private final LiveData<List<workout>> allWorkouts;
 
-    public WorkoutViewModel(Application application) {
+    public WorkoutViewModel(@NonNull Application application) {
         super(application);
         repository = new WorkoutRepository(application);
         allWorkouts = repository.getAllWorkouts();
@@ -22,6 +25,10 @@ public class WorkoutViewModel extends AndroidViewModel {
 
     public void insert(workout workout) {
         repository.insert(workout);
+    }
+
+    public void insertAll(workout... workouts) {
+        repository.insertAll(workouts);
     }
 
     public void update(workout workout) {
@@ -36,12 +43,7 @@ public class WorkoutViewModel extends AndroidViewModel {
         return allWorkouts;
     }
 
-    // Add to existing ViewModel class
     public LiveData<workout> getWorkoutById(int workoutId) {
         return repository.getWorkoutById(workoutId);
-    }
-
-    public void updateWorkout(workout workout) {
-        repository.update(workout);
     }
 }

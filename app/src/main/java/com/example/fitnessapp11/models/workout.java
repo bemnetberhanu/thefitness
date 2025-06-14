@@ -3,31 +3,37 @@ package com.example.fitnessapp11.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// models/Workout.java
 @Entity(tableName = "workouts")
 public class workout {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String name;
     private String description;
-    private int duration; // in minutes
+    private int duration; // minutes
     private String difficulty;
     private String category;
-    private long createdAt;
+    private String youtubeId;
+    private String thumbnailUrl;
 
-    // Constructors, Getters & Setters
-    public workout(String name, String description, int duration, String difficulty, String category) {
+    public workout(String name, String description, int duration,
+                   String difficulty, String category, String youtubeId) {
         this.name = name;
         this.description = description;
         this.duration = duration;
         this.difficulty = difficulty;
         this.category = category;
-        this.createdAt = System.currentTimeMillis();
+        this.youtubeId = youtubeId;
+        this.thumbnailUrl = "https://img.youtube.com/vi/" + youtubeId + "/0.jpg";
     }
 
-    // Getters and Setters for all fields
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -69,12 +75,19 @@ public class workout {
         this.category = category;
     }
 
-    public long getCreatedAt() {
-        return createdAt;
+    public String getYoutubeId() {
+        return youtubeId;
     }
 
-    public void setCreatedAt(long createdAt) {
-        this.createdAt = createdAt;
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
     }
-    // ... rest of getters/setters
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
 }

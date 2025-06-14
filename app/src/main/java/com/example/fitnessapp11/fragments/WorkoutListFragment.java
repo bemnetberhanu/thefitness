@@ -19,35 +19,59 @@ import com.example.fitnessapp11.adapters.WorkoutAdapter;
 import com.example.fitnessapp11.models.workout;
 import com.example.fitnessapp11.viewmodels.WorkoutViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WorkoutListFragment extends Fragment implements WorkoutAdapter.OnItemClickListener {
     private WorkoutViewModel workoutViewModel;
-    private WorkoutAdapter adapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
 
-        adapter = new WorkoutAdapter();
+        WorkoutAdapter adapter = new WorkoutAdapter();
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         workoutViewModel = new ViewModelProvider(this).get(WorkoutViewModel.class);
-        workoutViewModel.getAllWorkouts().observe(getViewLifecycleOwner(), workouts -> {
-            adapter.setWorkouts(workouts);
-        });
+        workoutViewModel.getAllWorkouts().observe(getViewLifecycleOwner(), adapter::setWorkouts);
 
+
+
+
+        addSampleWorkouts();
         return view;
+    }
+
+    private void addSampleWorkouts() {
+        List<workout> sampleWorkouts = new ArrayList<>();
+
+        // Add category as the 5th parameter
+        sampleWorkouts.add(new workout(
+                "Morning Yoga",
+                "15 min relaxing routine",
+                15,
+                "Beginner",
+                "Yoga"  // Added category
+        ));
+
+        sampleWorkouts.add(new workout(
+                "Full Body HIIT",
+                "Intense 30 min workout",
+                30,
+                "Advanced",
+                "Cardio"  // Added category
+        ));
+
+        workoutViewModel.insertAll(sampleWorkouts.toArray(new workout[0]));
     }
 
     @Override
     public void onItemClick(workout workout) {
-        // Navigate to detail fragment with workout ID
         Bundle args = new Bundle();
         args.putInt("workoutId", workout.getId());
         Navigation.findNavController(requireView()).navigate(

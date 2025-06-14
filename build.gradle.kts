@@ -9,12 +9,4 @@ buildscript {
         classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.6")
     }
 }
-// Project-level build.gradle
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        // Add this line for JitPack
-        maven { url ("https://jitpack.io") }
-    }
-}
+

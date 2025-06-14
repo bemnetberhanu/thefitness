@@ -12,6 +12,9 @@ import java.util.List;
 
 @Dao
 public interface WorkoutDao {
+
+    @Insert
+    void insertAll(workout... workouts);
     @Insert
     void insert(workout workout);
 
@@ -24,7 +27,7 @@ public interface WorkoutDao {
     @Query("DELETE FROM workouts")
     void deleteAllWorkouts();
 
-    @Query("SELECT * FROM workouts ORDER BY createdAt DESC")
+    @Query("SELECT * FROM workouts ORDER BY id DESC")
     LiveData<List<workout>> getAllWorkouts();
 
     @Query("SELECT * FROM workouts WHERE id = :workoutId")
